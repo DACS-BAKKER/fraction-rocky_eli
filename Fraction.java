@@ -44,10 +44,20 @@ public class Fraction implements Comparable<Fraction> {
     //public Fraction subtract(Fraction f)
 
     // multiplies fraction f by this fraction -  returns the resulting fraction
-    //public Fraction multiply(Fraction f)
+    public Fraction multiply(Fraction f) {
+        int numerator = this.numerator * f.getNumerator();
+        int denominator = this.denominator * f.getDenominator();
+        Fraction result = new Fraction (numerator,denominator);
+        return result;
+    }
 
     // divides fraction f to this fraction - returns the resulting fraction
-    //public Fraction divide(Fraction f)
+    public Fraction divide(Fraction f) {
+        int numerator = this.numerator * f.getDenominator();
+        int denominator = this.denominator * f.getNumerator();
+        Fraction result = new Fraction (numerator,denominator);
+        return result;
+    }
 
     // returns the decimal representation (approximation) of the fraction
     //public double toDecimal()
@@ -56,12 +66,14 @@ public class Fraction implements Comparable<Fraction> {
     // return a negative number if this fraction is less than the other
     // return 0 if the fractions are equal
     // return a positive number if this fraction is greater than the other
-    public int compareTo(Fraction f){
+    public int compareTo(Fraction f) {
         return 0;
     }
 
     // returns a string representation of the fraction
-    //public String toString()
+    public String toString() {
+        return (numerator + "/" + denominator);
+    }
 
     // do unit testing of this class
    // public static void main(String[] args);
