@@ -35,8 +35,8 @@ public class Fraction implements Comparable<Fraction> {
 
     // adds fraction f to this fraction - returns the resulting fraction
     public Fraction add(Fraction f) {
-        int resultDenom = this.denominator * f.getDenominator();
-        int resultNumer = this.numerator * f.getDenominator() + this.denominator * f.getNumerator();
+        int resultDenom = this.denominator * f.denominator;
+        int resultNumer = this.numerator * f.denominator + this.denominator * f.numerator;
         Fraction result = new Fraction(resultNumer, resultDenom);
         result.reduce();
         return result;
@@ -44,8 +44,8 @@ public class Fraction implements Comparable<Fraction> {
 
     // subtracts fraction f from this fraction - returns the resulting fraction
     public Fraction subtract(Fraction f) {
-        int resultDenom = this.denominator * f.getDenominator();
-        int resultNumer = this.numerator * f.getDenominator() - this.denominator * f.getNumerator();
+        int resultDenom = this.denominator * f.denominator;
+        int resultNumer = this.numerator * f.denominator - this.denominator * f.numerator;
         Fraction result = new Fraction(resultNumer, resultDenom);
         result.reduce();
         return result;
@@ -53,16 +53,16 @@ public class Fraction implements Comparable<Fraction> {
 
     // multiplies fraction f by this fraction -  returns the resulting fraction
     public Fraction multiply(Fraction f) {
-        int numerator = this.numerator * f.getNumerator();
-        int denominator = this.denominator * f.getDenominator();
+        int numerator = this.numerator * f.numerator;
+        int denominator = this.denominator * f.denominator;
         Fraction result = new Fraction (numerator,denominator);
         return result;
     }
 
     // divides fraction f to this fraction - returns the resulting fraction
     public Fraction divide(Fraction f) {
-        int numerator = this.numerator * f.getDenominator();
-        int denominator = this.denominator * f.getNumerator();
+        int numerator = this.numerator * f.denominator;
+        int denominator = this.denominator * f.numerator;
         Fraction result = new Fraction (numerator,denominator);
         return result;
     }
@@ -120,15 +120,6 @@ public class Fraction implements Comparable<Fraction> {
         this.numerator = this.numerator / myGCD;
         this.denominator = this.denominator / myGCD;
     }
-
-    public int getNumerator() {
-        return numerator;
-    }
-
-    public int getDenominator() {
-        return denominator;
-    }
-
     // do unit testing of this class
    // public static void main(String[] args);
 }
