@@ -11,11 +11,12 @@ public class Fraction implements Comparable<Fraction> {
 
     // constructor takes the numerator and denominator and sets up the fraction
     public Fraction(int numerator, int denominator) {
-        if(denominator == 0){
+        if(denominator == 0) {
             throw new IllegalArgumentException("denominator can not be zero");
         }
         this.numerator = numerator;
         this.denominator = denominator;
+        this.reduceSign();
         this.reduce();
     }
 
@@ -23,6 +24,7 @@ public class Fraction implements Comparable<Fraction> {
     public Fraction(int number) {
         this.numerator = number;
         this.denominator = 1;
+        this.reduceSign();
         this.reduce();
     }
 
@@ -31,14 +33,15 @@ public class Fraction implements Comparable<Fraction> {
     //must have a slash, ex: will not accept "3"
     public Fraction(String fraction) {
         int slashIndex = fraction.indexOf("/");
-        if (slashIndex==-1){
-            throw new IllegalArgumentException("fracion must contain a '/'.");
+        if (slashIndex==-1) {
+            throw new IllegalArgumentException("fraction must contain a '/'.");
         }
         this.numerator = Integer.parseInt(fraction.substring(0,slashIndex));
         this.denominator = Integer.parseInt(fraction.substring(slashIndex+1,fraction.length()));
-        if(this.denominator == 0){
+        if(this.denominator == 0) {
             throw new IllegalArgumentException("denominator can not be zero");
         }
+        this.reduceSign();
         this.reduce();
     }
 
@@ -123,8 +126,16 @@ public class Fraction implements Comparable<Fraction> {
         return divisor;
     }
 
+    //removes negative sign if found both in numerator and denominator, brings negative sign to numerator if found only in denominator
+    private void reduceSign() {
+        if(this.denominator < 0){
+            this.numerator = this.numerator * -1;
+            this.denominator = this.denominator * -1;
+        }
+    }
+
     //reduces fraction to lowest terms by dividing numerator and denominator by greatest common factor
-    private void reduce(){
+    private void reduce() {
         int myGCD = GCD(this.numerator, this.denominator);
         this.numerator = this.numerator / myGCD;
         this.denominator = this.denominator / myGCD;
