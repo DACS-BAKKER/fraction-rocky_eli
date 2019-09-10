@@ -11,6 +11,9 @@ public class Fraction implements Comparable<Fraction> {
 
     // constructor takes the numerator and denominator and sets up the fraction
     public Fraction(int numerator, int denominator) {
+        if(denominator == 0){
+            throw new IllegalArgumentException("denominator can not be zero");
+        }
         this.numerator = numerator;
         this.denominator = denominator;
         this.reduce();
@@ -28,8 +31,14 @@ public class Fraction implements Comparable<Fraction> {
     //must have a slash, ex: will not accept "3"
     public Fraction(String fraction) {
         int slashIndex = fraction.indexOf("/");
+        if (slashIndex==-1){
+            throw new IllegalArgumentException("fracion must contain a '/'.");
+        }
         this.numerator = Integer.parseInt(fraction.substring(0,slashIndex));
         this.denominator = Integer.parseInt(fraction.substring(slashIndex+1,fraction.length()));
+        if(this.denominator == 0){
+            throw new IllegalArgumentException("denominator can not be zero");
+        }
         this.reduce();
     }
 
