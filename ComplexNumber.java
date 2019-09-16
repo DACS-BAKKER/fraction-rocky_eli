@@ -17,10 +17,30 @@ public class ComplexNumber<Public> {
 
     // constructor takes a string representation of a complex number, say “1+2i”, and sets up the fraction
     public ComplexNumber(String complexNumber){
-        int plusSignIndex = complexNumber.indexOf("+");
-        int iIndex = complexNumber.indexOf("i");
-        this.real = Double.valueOf(complexNumber.substring(0, plusSignIndex));
-        this.imaginary = Double.valueOf(complexNumber.substring(plusSignIndex + 1, iIndex));
+        if(complexNumber.indexOf("+") != -1){
+            int plusSignIndex = complexNumber.indexOf("+");
+            int iIndex = complexNumber.indexOf("i");
+            this.real = Double.valueOf(complexNumber.substring(0, plusSignIndex));
+            if(complexNumber.substring(plusSignIndex + 1, iIndex).length() >= 1){
+                this.imaginary = Double.valueOf(complexNumber.substring(plusSignIndex + 1, iIndex));
+            }
+            else{
+                this.imaginary = 1.0;
+            }
+
+        }
+        else if(complexNumber.indexOf("+") == -1 && complexNumber.indexOf("-") != -1){
+            int minusSignIndex = complexNumber.indexOf("-");
+            int iIndex = complexNumber.indexOf("i");
+            this.real = Double.valueOf(complexNumber.substring(0, minusSignIndex));
+            if(complexNumber.substring(minusSignIndex + 1, iIndex).length() >= 1){
+                this.imaginary = Double.valueOf(complexNumber.substring(minusSignIndex + 1, iIndex));
+            }
+            else{
+                this.imaginary = 1.0;
+            }
+        }
+
     }
 
 
@@ -37,7 +57,7 @@ public class ComplexNumber<Public> {
     // multiplies complex number c by this complex number -  returns the resulting complex number
     public ComplexNumber multiply(ComplexNumber c){
         return new ComplexNumber(((this.real * c.real) - (this.imaginary * c.imaginary)),
-                ((this.real * c.imaginary) + (this.imaginary * c.real)));
+                                 ((this.real * c.imaginary) + (this.imaginary * c.real)));
     }
 
     // divides complex number c to this complex number - returns the resulting complex number

@@ -15,9 +15,12 @@ import java.awt.event.ActionListener;
 
 public class Calculator implements ActionListener {
 
-        JTextField tFrac1, tFrac2, tResult;
+        JTextField in1, in2, tResult;
         JButton bAdd, bSubtract, bMultiply, bDivide;
-        Calculator(){
+        JTextArea log;
+        JScrollPane scroll;
+
+    Calculator(){
 
             JFrame f= new JFrame();
 
@@ -25,15 +28,15 @@ public class Calculator implements ActionListener {
             title.setBounds(75,20,100,15);
             title.setHorizontalAlignment(JLabel.CENTER);
 
-            tFrac1 = new JTextField();
-            tFrac1.setText("Enter Value 1");
-            tFrac1.setHorizontalAlignment(JTextField.CENTER);
-            tFrac1.setBounds(50,50,150,20);
+            in1 = new JTextField();
+            in1.setText("Enter Value 1");
+            in1.setHorizontalAlignment(JTextField.CENTER);
+            in1.setBounds(50,50,150,20);
 
-            tFrac2 = new JTextField();
-            tFrac2.setText("Enter Value 2");
-            tFrac2.setHorizontalAlignment(JTextField.CENTER);
-            tFrac2.setBounds(50,100,150,20);
+            in2 = new JTextField();
+            in2.setText("Enter Value 2");
+            in2.setHorizontalAlignment(JTextField.CENTER);
+            in2.setBounds(50,100,150,20);
 
             tResult = new JTextField();
             tResult.setText("Result");
@@ -47,10 +50,10 @@ public class Calculator implements ActionListener {
             bSubtract = new JButton("-");
             bSubtract.setBounds(80,200,40,40);
 
-            bMultiply = new JButton("*");
+            bMultiply = new JButton("×");
             bMultiply.setBounds(130,200,40,40);
 
-            bDivide = new JButton("/");
+            bDivide = new JButton("÷");
             bDivide.setBounds(180,200,40,40);
 
             bAdd.addActionListener(this);
@@ -59,13 +62,13 @@ public class Calculator implements ActionListener {
             bDivide.addActionListener(this);
 
 
-            JTextArea log = new JTextArea();
-            log.setBounds(250,10,240,260);
+            log = new JTextArea();
             log.setEditable(false);
-            JScrollPane scroll = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            scroll = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            scroll.setBounds(250,10,240,260);
 
 
-            f.add(tFrac1);f.add(tFrac2);f.add(tResult);f.add(bAdd);f.add(bSubtract);f.add(bMultiply);f.add(bDivide);f.add(title);f.add(log);f.add(scroll);
+            f.add(in1);f.add(in2);f.add(  tResult);f.add(bAdd);f.add(bSubtract);f.add(bMultiply);f.add(bDivide);f.add(title);f.add(scroll);
             f.setSize(500,300);
             f.setLayout(null);
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,21 +76,73 @@ public class Calculator implements ActionListener {
         }
 
         public void actionPerformed(ActionEvent e) {
-            String sFrac1=tFrac1.getText();
-            String sFrac2=tFrac2.getText();
-            Fraction fFrac1 = new Fraction(sFrac1);
-            Fraction fFrac2 = new Fraction(sFrac2);
-            Fraction fResult = new Fraction(1,1); //eventually create null constructor
-            if(e.getSource()==bAdd){
-                fResult = fFrac1.add(fFrac2);
-            }else if(e.getSource()==bSubtract){
-                fResult = fFrac1.subtract(fFrac2);
-            }else if(e.getSource()==bMultiply){
-                fResult = fFrac1.multiply(fFrac2);
-            }else if(e.getSource()==bDivide){
-                fResult = fFrac1.divide(fFrac2);
+            int posCounter = 0;
+            String sin1 = in1.getText();
+            String sin2 = in2.getText();
+            if((sin1.indexOf("i") == -1) && (sin2.indexOf("i") == -1)){
+                Fraction f1, f2, rFraction;
+                f1 = new Fraction(sin1);
+                f2 = new Fraction(sin2);
+                if(e.getSource()==bAdd){
+                    rFraction = f1.add(f2);
+                    tResult.setText(rFraction.toString());
+                    String resultStr = f1.toString() + " + " + f2.toString() + " = " + rFraction.toString() + "\n";
+                    log.insert(resultStr, posCounter);
+                    posCounter++;
+                }else if(e.getSource()==bSubtract){
+                    rFraction = f1.subtract(f2);
+                    String resultStr = f1.toString() + " - " + f2.toString() + " = " + rFraction.toString() + "\n";
+                    log.insert(resultStr, posCounter);
+                    posCounter++;
+                    tResult.setText(rFraction.toString());
+                }else if(e.getSource()==bMultiply){
+                    rFraction = f1.multiply(f2);
+                    String resultStr = f1.toString() + " × " + f2.toString() + " = " + rFraction.toString() + "\n";
+                    log.insert(resultStr, posCounter);
+                    posCounter++;
+                    tResult.setText(rFraction.toString());
+                }else if(e.getSource()==bDivide) {
+                    rFraction = f1.divide(f2);
+                    tResult.setText(rFraction.toString());
+                    String resultStr = f1.toString() + " ÷ " + f2.toString() + " = " + rFraction.toString() + "\n";
+                    log.insert(resultStr, posCounter);
+                    posCounter++;
+                }
             }
-            tResult.setText(fResult.toString());
+            else if((sin1.indexOf("i") != -1) && (sin2.indexOf("i") != -1)){
+                ComplexNumber c1, c2, rComplexNumber;
+                c1 = new ComplexNumber(sin1);
+                c2 = new ComplexNumber(sin2);
+                if(e.getSource()==bAdd){
+                    rComplexNumber = c1.add(c2);
+                    tResult.setText(rComplexNumber.toString());
+                    String resultStr = c1.toString() + " + " + c2.toString() + " = " + rComplexNumber.toString() + "\n";
+                    log.insert(resultStr, posCounter);
+                    posCounter++;
+                }else if(e.getSource()==bSubtract){
+                    rComplexNumber = c1.subtract(c2);
+                    tResult.setText(rComplexNumber.toString());
+                    String resultStr = c1.toString() + " - " + c2.toString() + " = " + rComplexNumber.toString() + "\n";
+                    log.insert(resultStr, posCounter);
+                    posCounter++;
+                }else if(e.getSource()==bMultiply){
+                    rComplexNumber = c1.multiply(c2);
+                    tResult.setText(rComplexNumber.toString());
+                    String resultStr = c1.toString() + " × " + c2.toString() + " = " + rComplexNumber.toString() + "\n";
+                    log.insert(resultStr, posCounter);
+                    posCounter++;
+                }else if(e.getSource()==bDivide){
+                    rComplexNumber = c1.divide(c2);
+                    tResult.setText(rComplexNumber.toString());
+                    String resultStr = c1.toString() + " ÷ " + c2.toString() + " = " + rComplexNumber.toString() + "\n";
+                    log.insert(resultStr, posCounter);
+                    posCounter++;
+                }
+            }
+            else{
+                log.insert("ERROR: Mismatching value types" + "\n", posCounter);
+                posCounter++;
+            }
         }
         public static void main(String[] args) {
             new Calculator();
