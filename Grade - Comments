@@ -1,0 +1,19 @@
+Rocky and Eli - Fraction and Complex Number Calculator
+
+Code - 
+You do not need reduce and reduceSign for public Fraction(int number)
+
+Nice work throwing exceptions.
+
+You implemented all the required fraction and complex number operations.
+
+Good start using Swing.
+
+GUI -
+
+It works!
+
+Your GUI is okay.  You should provide labels for your boxes so a user can figure out what the do / mean.
+
+Provide some instructions for the calculator and what input is allowable.
+
